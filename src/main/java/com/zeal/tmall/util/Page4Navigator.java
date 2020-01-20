@@ -5,12 +5,14 @@
  */
 package com.zeal.tmall.util;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 import org.springframework.data.domain.Page;
 
 import java.util.List;
 
 @Data
+@JsonIgnoreProperties({"pageFromJPA"})
 public class Page4Navigator<T> {
 
     Page<T> pageFromJPA;

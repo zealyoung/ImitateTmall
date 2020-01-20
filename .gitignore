@@ -22,7 +22,6 @@ target/
 HELP.md
 mvnw*
 
-
 ### NetBeans ###
 /nbproject/private/
 /nbbuild/

@@ -35,4 +35,8 @@ public class CategoryService {
     public List<Category> list() {
         return categoryDAO.findAll(Sort.by(Sort.Direction.DESC, "id"));
     }
+
+    public void add(Category bean) {
+        categoryDAO.save(bean);
+    }
 }
