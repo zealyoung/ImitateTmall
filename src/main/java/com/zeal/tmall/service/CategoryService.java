@@ -16,6 +16,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class CategoryService {
@@ -38,5 +39,18 @@ public class CategoryService {
 
     public void add(Category bean) {
         categoryDAO.save(bean);
+    }
+
+    public void update(Category bean) {
+        categoryDAO.save(bean);
+    }
+
+    public void delete(int id) {
+        categoryDAO.deleteById(id);
+    }
+
+    public Category get(int id) {
+        Category category= categoryDAO.findById(id).get();
+        return category;
     }
 }

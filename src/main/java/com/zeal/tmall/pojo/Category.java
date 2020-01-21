@@ -14,13 +14,12 @@ import javax.persistence.*;
 @Table(name = "category")
 @JsonIgnoreProperties({ "handler","hibernateLazyInitializer" })
 @Data
-
 public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    int id;
+    private int id;
 
     @Column(name = "name")
-    String name;
+    private String name;
 }

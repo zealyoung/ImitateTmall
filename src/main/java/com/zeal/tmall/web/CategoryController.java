@@ -10,10 +10,7 @@ import com.zeal.tmall.service.CategoryService;
 import com.zeal.tmall.util.ImageUtil;
 import com.zeal.tmall.util.Page4Navigator;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.imageio.ImageIO;
@@ -55,5 +52,31 @@ public class CategoryController {
         BufferedImage img = ImageUtil.change2jpg(file);
 
         ImageIO.write(img, "jpg", file);
+    }
+
+    @DeleteMapping("/categories/{id}")
+    public String delete(@PathVariable("id") int id, HttpServletRequest request)  throws Exception {
+        categoryService.delete(id);
+        File  imageFolder= new File(request.getServletContext().getRealPath("img/category"));
+        File file = new File(imageFolder,id+".jpg");
+        file.delete();
+        return null;
+    }
+
+    @GetMapping("/categories/{id}")
+    public Category get(@PathVariable("id") int id) throws Exception {
+        Category bean=categoryService.get(id);
+        return bean;
+    }
+
+    @PutMapping("categories/{id}")
+    public Object update(Category bean, MultipartFile image, HttpServletRequest request) throws Exception{
+
+        categoryService.update(bean);
+
+        if(image != null){
+            saveOrUpdateImageFile(bean, image, request);
+        }
+        return bean;
     }
 }
