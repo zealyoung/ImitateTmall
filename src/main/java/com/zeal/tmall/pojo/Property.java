@@ -9,6 +9,8 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "property")
@@ -20,6 +22,8 @@ public class Property {
     @Column(name = "id")
     private int id;
 
+    @NotNull(message = "传入名称为null")
+    @NotEmpty(message = "传入名称为空")
     @Column(name = "name")
     private String name;
 

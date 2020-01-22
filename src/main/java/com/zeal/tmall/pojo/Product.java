@@ -36,4 +36,7 @@ public class Product {
     private int stock;
 
     private LocalDateTime createDate;
+
+    @Transient
+    private ProductImage firstProductImage;
 }

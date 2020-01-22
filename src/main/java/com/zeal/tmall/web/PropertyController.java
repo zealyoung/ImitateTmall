@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 
 @RestController
 public class PropertyController {
@@ -28,7 +29,7 @@ public class PropertyController {
     }
 
     @PostMapping(value = "/properties")
-    public Object add(@RequestBody Property bean) {
+    public Object add(@RequestBody @Valid Property bean) {
         propertyService.add(bean);
         return bean;
     }

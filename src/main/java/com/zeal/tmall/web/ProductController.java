@@ -7,6 +7,7 @@ package com.zeal.tmall.web;
 
 import com.zeal.tmall.pojo.Product;
 import com.zeal.tmall.service.CategoryService;
+import com.zeal.tmall.service.ProductImageService;
 import com.zeal.tmall.service.ProductService;
 import com.zeal.tmall.util.Page4Navigator;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +24,8 @@ public class ProductController {
     ProductService productService;
     @Autowired
     CategoryService categoryService;
+    @Autowired
+    ProductImageService productImageService;
 
     @GetMapping("/categories/{cid}/products")
     public Page4Navigator<Product> list(@PathVariable("cid") int cid,
@@ -30,6 +33,9 @@ public class ProductController {
                                         @RequestParam(value = "size", defaultValue = "5") int size) throws Exception {
         start = start < 0 ? 0 : start;
         Page4Navigator<Product> page =productService.list(cid, start, size,5 );
+
+        productImageService.setFirstProductImages(page.getContent());
+
         return page;
     }
 

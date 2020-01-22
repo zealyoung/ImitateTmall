@@ -21,6 +21,7 @@ target/
 .mvn
 HELP.md
 mvnw*
+**/src/main/webapp/img
 
 ### NetBeans ###
 /nbproject/private/

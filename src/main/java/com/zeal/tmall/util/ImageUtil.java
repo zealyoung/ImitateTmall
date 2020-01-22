@@ -5,6 +5,8 @@
  */
 package com.zeal.tmall.util;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.*;
@@ -12,6 +14,28 @@ import java.io.File;
 import java.io.IOException;
 
 public class ImageUtil {
+
+    public static void writeImageJpg(MultipartFile image,  File file) throws Exception{
+        /**
+         *
+         * @param image
+         * @param file
+         * @return: void
+         * @Author: ZealYoung
+         * @Time: 2020/1/22 5:41 下午
+         * @Description: 用于将图片转换成jgp并写入
+         */
+        if(!file.getParentFile().exists())
+            file.getParentFile().mkdirs();
+        try {
+            image.transferTo(file);
+            BufferedImage img = ImageUtil.change2jpg(file);
+            ImageIO.write(img, "jpg", file);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
 
     public static BufferedImage change2jpg(File f) {
         /**

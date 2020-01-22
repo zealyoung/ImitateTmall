@@ -49,9 +49,7 @@ public class CategoryController {
             file.getParentFile().mkdirs();
 
         image.transferTo(file);
-
         BufferedImage img = ImageUtil.change2jpg(file);
-
         ImageIO.write(img, "jpg", file);
     }
 
