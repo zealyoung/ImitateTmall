@@ -6,6 +6,7 @@
 package com.zeal.tmall.service;
 
 import com.zeal.tmall.dao.PropertyDAO;
+import com.zeal.tmall.dao.PropertyValueDAO;
 import com.zeal.tmall.pojo.Category;
 import com.zeal.tmall.pojo.Property;
 import com.zeal.tmall.util.Page4Navigator;
@@ -16,11 +17,16 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class PropertyService {
 
     @Autowired
     PropertyDAO propertyDAO;
+
+    @Autowired
+    PropertyValueDAO propertyValueDAO;
 
     @Autowired
     CategoryService categoryService;
@@ -42,6 +48,7 @@ public class PropertyService {
     }
 
     public void delete(int id) {
+        propertyValueDAO.deleteByProperty(propertyDAO.getOne(id));
         propertyDAO.deleteById(id);
     }
 
@@ -51,6 +58,10 @@ public class PropertyService {
 
     public void update(Property bean) {
         propertyDAO.save(bean);
+    }
+
+    public List<Property> listByCategory(Category category){
+        return propertyDAO.findByCategory(category);
     }
 
 }

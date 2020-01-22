@@ -6,6 +6,7 @@
 package com.zeal.tmall.service;
 
 import com.zeal.tmall.dao.ProductDAO;
+import com.zeal.tmall.dao.PropertyValueDAO;
 import com.zeal.tmall.pojo.Category;
 import com.zeal.tmall.pojo.Product;
 import com.zeal.tmall.util.Page4Navigator;
@@ -23,6 +24,9 @@ public class ProductService  {
     ProductDAO productDAO;
 
     @Autowired
+    PropertyValueDAO propertyValueDAO;
+
+    @Autowired
     CategoryService categoryService;
 
     public void add(Product bean) {
@@ -30,6 +34,7 @@ public class ProductService  {
     }
 
     public void delete(int id) {
+        propertyValueDAO.deleteByProduct(productDAO.getOne(id));
         productDAO.deleteById(id);
     }
 
