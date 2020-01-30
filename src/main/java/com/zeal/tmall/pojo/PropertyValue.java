@@ -9,24 +9,25 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 @Entity
-@Table(name = "propertyvalue")
 @JsonIgnoreProperties({ "handler","hibernateLazyInitializer" })
 @Data
 public class PropertyValue {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
     private int id;
 
-    @ManyToOne(cascade=CascadeType.REMOVE)
+    @ManyToOne
     @JoinColumn(name="pid")
     private Product product;
 
-    @ManyToOne(cascade=CascadeType.REMOVE)
+    @ManyToOne
     @JoinColumn(name="ptid")
     private Property property;
 
+    @NotNull(message = "传入值为null")
     private String value;
 }

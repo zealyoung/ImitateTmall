@@ -29,7 +29,7 @@ public class PropertyController {
 
     @PostMapping(value = "/properties")
     public Object add(@RequestBody @Valid Property bean) {
-        propertyService.add(bean);
+        propertyService.create(bean);
         return bean;
     }
 
@@ -40,14 +40,14 @@ public class PropertyController {
     }
 
     @PutMapping("/properties")
-    public Object update(@RequestBody Property bean) throws Exception {
+    public Object update(@RequestBody @Valid Property bean) throws Exception {
         propertyService.update(bean);
         return bean;
     }
 
     @GetMapping("/properties/{id}")
     public Property get(@PathVariable("id") int id) throws Exception {
-        Property bean=propertyService.get(id);
+        Property bean = propertyService.get(id);
         return bean;
     }
 }

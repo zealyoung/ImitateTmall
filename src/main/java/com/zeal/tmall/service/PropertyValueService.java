@@ -5,6 +5,7 @@
  */
 package com.zeal.tmall.service;
 
+import com.zeal.tmall.dao.PropertyDAO;
 import com.zeal.tmall.dao.PropertyValueDAO;
 import com.zeal.tmall.pojo.Product;
 import com.zeal.tmall.pojo.Property;
@@ -20,7 +21,7 @@ public class PropertyValueService  {
     @Autowired
     PropertyValueDAO propertyValueDAO;
     @Autowired
-    PropertyService propertyService;
+    PropertyDAO propertyDAO;
 
     public void update(PropertyValue bean) {
         propertyValueDAO.save(bean);
@@ -31,13 +32,14 @@ public class PropertyValueService  {
     }
 
     public void init(Product product) {
-        List<Property> properties = propertyService.listByCategory(product.getCategory());
+        List<Property> properties = propertyDAO.findByCategory(product.getCategory());
         for (Property property : properties) {
             PropertyValue propertyValue = getByPropertyAndProduct(product, property);
             if(propertyValue == null){
                 propertyValue = new PropertyValue();
                 propertyValue.setProduct(product);
                 propertyValue.setProperty(property);
+                propertyValue.setValue("");
                 propertyValueDAO.save(propertyValue);
             }
         }

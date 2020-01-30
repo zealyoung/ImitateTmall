@@ -13,8 +13,6 @@ import com.zeal.tmall.util.Page4Navigator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @RestController
@@ -33,16 +31,15 @@ public class ProductController {
                                         @RequestParam(value = "size", defaultValue = "5") int size) throws Exception {
         start = start < 0 ? 0 : start;
         Page4Navigator<Product> page =productService.list(cid, start, size,5 );
-
         productImageService.setFirstProductImages(page.getContent());
 
         return page;
     }
 
     @PostMapping("/products")
-    public Object add(@RequestBody Product bean) throws Exception {
+    public Object create(@RequestBody Product bean) throws Exception {
         bean.setCreateDate(LocalDateTime.now());
-        productService.add(bean);
+        productService.create(bean);
         return bean;
     }
 

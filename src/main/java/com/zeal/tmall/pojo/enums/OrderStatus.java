@@ -34,6 +34,11 @@ public enum OrderStatus {
         return statusDesc;
     }
 
+    /**
+     * 根据status返回对应中文
+     * @param status
+     * @return
+     */
     public static String getInfo(String status) {
         if(status != null) {
             for(OrderStatus entity : OrderStatus.values()){

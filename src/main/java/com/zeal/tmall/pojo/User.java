@@ -8,20 +8,17 @@ package com.zeal.tmall.pojo;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AccessLevel;
 import lombok.Data;
-import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
 
 @Entity
-@Table(name = "user")
 @JsonIgnoreProperties({ "handler","hibernateLazyInitializer" })
 @Data
 public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
     private int id;
 
     private String password;
@@ -32,7 +29,7 @@ public class User {
 
     @Transient
     @Setter(AccessLevel.NONE)
-    private String anonymousName;
+    private String anonymousName;//匿名
 
     public String getAnonymousName() {
         if(anonymousName != null)

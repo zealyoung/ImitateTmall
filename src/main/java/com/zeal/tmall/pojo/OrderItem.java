@@ -12,7 +12,6 @@ import lombok.Data;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "orderitem")
 @JsonIgnoreProperties({ "handler","hibernateLazyInitializer" })
 @Data
 public class OrderItem {

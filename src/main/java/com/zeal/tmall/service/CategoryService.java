@@ -5,52 +5,29 @@
  */
 package com.zeal.tmall.service;
 
-import com.zeal.tmall.dao.CategoryDAO;
 import com.zeal.tmall.pojo.Category;
 import com.zeal.tmall.util.Page4Navigator;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
-@Service
-public class CategoryService {
+public interface CategoryService {
 
-    @Autowired
-    CategoryDAO categoryDAO;
+    /**
+     * 分页查询
+     * @param start
+     * @param size
+     * @param navigatePages 导航分页的个数
+     */
+    Page4Navigator<Category> list(int start, int size, int navigatePages);
 
-    public Page4Navigator<Category> list(int start, int size, int navigatePages) {
+    List<Category> list();
 
-        Sort sort = Sort.by(Sort.Direction.DESC, "id");
-        Pageable pageable = PageRequest.of(start, size, sort);
-        Page pageFromJPA =categoryDAO.findAll(pageable);
+    void create(Category bean);
 
-        return new Page4Navigator<>(pageFromJPA,navigatePages);
-    }
+    void update(Category bean);
 
-    public List<Category> list() {
-        return categoryDAO.findAll(Sort.by(Sort.Direction.DESC, "id"));
-    }
+    void delete(int id);
 
-    public void add(Category bean) {
-        categoryDAO.save(bean);
-    }
-
-    public void update(Category bean) {
-        categoryDAO.save(bean);
-    }
-
-    public void delete(int id) {
-        categoryDAO.deleteById(id);
-    }
-
-    public Category get(int id) {
-        Category category= categoryDAO.findById(id).get();
-        return category;
-    }
+    Category get(int id);
 }

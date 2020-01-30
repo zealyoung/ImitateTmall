@@ -9,17 +9,18 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 @Entity
-@Table(name = "category")
 @JsonIgnoreProperties({ "handler","hibernateLazyInitializer" })
 @Data
 public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
     private int id;
 
-    @Column(name = "name")
+    @NotNull(message = "传入名称为null")
+    @NotEmpty(message = "传入名称为空")
     private String name;
 }

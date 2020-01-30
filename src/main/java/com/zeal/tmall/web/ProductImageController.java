@@ -15,11 +15,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
-import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -51,17 +48,17 @@ public class ProductImageController {
     }
 
     @PostMapping("/productImages")
-    public Object add(@RequestParam("pid") int pid,
-                      @RequestParam("type") String type,
-                      MultipartFile image,
-                      HttpServletRequest request) throws Exception {
+    public Object create(@RequestParam("pid") int pid,
+                         @RequestParam("type") String type,
+                         MultipartFile image,
+                         HttpServletRequest request) throws Exception {
 
         ProductImage bean = new ProductImage();
         Product product = productService.get(pid);
         bean.setProduct(product);
         bean.setType(type);
 
-        productImageService.add(bean);
+        productImageService.create(bean);
 
         File file = getNeedFile(bean, request);
         String fileName = file.getName();
