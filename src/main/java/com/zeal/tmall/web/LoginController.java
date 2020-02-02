@@ -56,4 +56,12 @@ public class LoginController {
         session.removeAttribute("user");
         return "redirect:home";
     }
+
+    @GetMapping("/forecheckLogin")
+    public Object checkLogin( HttpSession session) {
+        User user = (User) session.getAttribute("user");
+        if(user != null)
+            return Result.success();
+        return Result.fail("未登录");
+    }
 }

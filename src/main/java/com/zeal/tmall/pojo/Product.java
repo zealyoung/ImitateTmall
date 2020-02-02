@@ -15,6 +15,7 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @JsonIgnoreProperties({ "handler","hibernateLazyInitializer"})
@@ -41,10 +42,19 @@ public class Product {
 
     private LocalDateTime createDate;
 
+    private int saleCount;
+
+    @Transient
+    private int reviewCount;
+
     @ManyToOne
     @JoinColumn(name="cid")
     private Category category;
 
     @Transient
     private ProductImage firstProductImage;
+    @Transient
+    private List<ProductImage> productSingleImages;
+    @Transient
+    private List<ProductImage> productDetailImages;
 }
