@@ -5,6 +5,7 @@
  */
 package com.zeal.tmall.pojo;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 
@@ -26,6 +27,7 @@ public class Property {
 
     @ManyToOne
     @JoinColumn(name = "cid")
+    @JsonBackReference
     private Category category;
 
 }

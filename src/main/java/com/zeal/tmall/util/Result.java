@@ -5,14 +5,17 @@
  */
 package com.zeal.tmall.util;
 
+import lombok.Data;
+
+@Data
 public class Result {
 
     public static int SUCCESS_CODE = 0;
     public static int FAIL_CODE = 1;
 
-    int code;
-    String message;
-    Object data;
+    private int code;
+    private String message;
+    private Object data;
 
     private Result(int code, String message, Object data) {
         this.code = code;

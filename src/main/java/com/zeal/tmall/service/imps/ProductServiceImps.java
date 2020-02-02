@@ -20,6 +20,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.List;
 
 @Service
 public class ProductServiceImps implements ProductService {
@@ -40,6 +41,11 @@ public class ProductServiceImps implements ProductService {
         Page<Product> pageFromJPA =productDAO.findByCategory(category,pageable);
 
         return new Page4Navigator<>(pageFromJPA,navigatePages);
+    }
+
+    @Override
+    public List<Product> listByCategory(Category category) {
+        return productDAO.findByCategoryOrderById(category);
     }
 
     @Override

@@ -7,7 +7,6 @@ package com.zeal.tmall.service;
 
 import com.zeal.tmall.pojo.Category;
 import com.zeal.tmall.util.Page4Navigator;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 
@@ -30,4 +29,15 @@ public interface CategoryService {
     void delete(int id);
 
     Category get(int id);
+
+    void fillProduct(Category category);
+
+    void fillProduct(List<Category> categories);
+
+    //为多个分类填充推荐产品集合，即把分类下的产品集合，按照8个为一行，拆成多行
+    void fillByRow(List<Category> categories);
+
+    void removeCategoryFromProduct(List<Category> cs);
+
+    void removeCategoryFromProduct(Category category);
 }

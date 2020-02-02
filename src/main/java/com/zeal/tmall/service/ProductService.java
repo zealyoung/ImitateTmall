@@ -5,12 +5,17 @@
  */
 package com.zeal.tmall.service;
 
+import com.zeal.tmall.pojo.Category;
 import com.zeal.tmall.pojo.Product;
 import com.zeal.tmall.util.Page4Navigator;
+
+import java.util.List;
 
 public interface ProductService  {
 
     Page4Navigator<Product> list(int cid, int start, int size, int navigatePages);
+
+    List<Product> listByCategory(Category category);
 
     void create(Product bean);
 

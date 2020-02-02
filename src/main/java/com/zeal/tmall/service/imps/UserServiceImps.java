@@ -21,10 +21,27 @@ public class UserServiceImps implements UserService {
     @Autowired
     UserDAO userDAO;
 
+    @Override
     public Page4Navigator<User> list(int start, int size, int navigatePages) {
         Sort sort = Sort.by(Sort.Direction.DESC, "id");
         Pageable pageable = PageRequest.of(start, size,sort);
         Page pageFromJPA =userDAO.findAll(pageable);
         return new Page4Navigator<>(pageFromJPA,navigatePages);
+    }
+
+    @Override
+    public boolean isExist(String name) {
+        User user = userDAO.findByName(name);
+        return user != null;
+    }
+
+    @Override
+    public void create(User user) {
+        userDAO.save(user);
+    }
+
+    @Override
+    public User get(String name, String password) {
+        return userDAO.getByNameAndPassword(name,password);
     }
 }

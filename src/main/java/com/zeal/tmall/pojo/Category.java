@@ -11,6 +11,7 @@ import lombok.Data;
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import java.util.List;
 
 @Entity
 @JsonIgnoreProperties({ "handler","hibernateLazyInitializer" })
@@ -23,4 +24,9 @@ public class Category {
     @NotNull(message = "传入名称为null")
     @NotEmpty(message = "传入名称为空")
     private String name;
+
+    @Transient
+    private List<Product> products;
+    @Transient
+    private List<List<Product>> productsByRow;
 }

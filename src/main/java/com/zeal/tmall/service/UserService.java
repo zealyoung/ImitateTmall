@@ -12,4 +12,9 @@ public interface UserService {
 
     Page4Navigator<User> list(int start, int size, int navigatePages);
 
+    boolean isExist(String name);
+
+    void create(User user);
+
+    User get(String name, String password);
 }
