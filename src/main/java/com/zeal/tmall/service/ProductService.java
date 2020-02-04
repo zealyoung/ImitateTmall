@@ -25,4 +25,7 @@ public interface ProductService  {
 
     void update(Product bean);
 
+    void setReviewCount(List<Product> products);
+
+    void setReviewCount(Product product);
 }

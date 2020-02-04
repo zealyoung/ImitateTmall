@@ -45,7 +45,7 @@ public class ForeProductController {
 
         List<PropertyValue> pvs = propertyValueService.list(product);
         List<Review> reviews = reviewService.list(product);
-        product.setReviewCount(reviewService.getCount(product));
+        productService.setReviewCount(product);
         productImageService.setFirstProductImage(product);
 
         Map<String,Object> map= new HashMap<>();

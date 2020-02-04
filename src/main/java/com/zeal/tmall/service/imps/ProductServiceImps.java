@@ -11,6 +11,7 @@ import com.zeal.tmall.pojo.Category;
 import com.zeal.tmall.pojo.Product;
 import com.zeal.tmall.service.CategoryService;
 import com.zeal.tmall.service.ProductService;
+import com.zeal.tmall.service.ReviewService;
 import com.zeal.tmall.util.Page4Navigator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -30,6 +31,8 @@ public class ProductServiceImps implements ProductService {
     PropertyValueDAO propertyValueDAO;
     @Autowired
     CategoryService categoryService;
+    @Autowired
+    ReviewService reviewService;
 
     @Override
     public Page4Navigator<Product> list(int cid, int start, int size, int navigatePages) {
@@ -68,5 +71,17 @@ public class ProductServiceImps implements ProductService {
     @Override
     public void update(Product bean) {
         productDAO.save(bean);
+    }
+
+    @Override
+    public void setReviewCount(List<Product> products) {
+        for(Product product : products){
+            setReviewCount(product);
+        }
+    }
+
+    @Override
+    public void setReviewCount(Product product) {
+        product.setReviewCount(reviewService.getCount(product));
     }
 }
