@@ -15,7 +15,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.HtmlUtils;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
 
 @RestController
 public class LoginController {
@@ -52,9 +55,10 @@ public class LoginController {
     }
 
     @GetMapping("/forelogout")
-    public String logout(HttpSession session) {
+    public void logout(HttpServletResponse response, HttpSession session) throws IOException {
+        response.sendRedirect("home");
         session.removeAttribute("user");
-        return "redirect:home";
+        //return "redirect:home";
     }
 
     @GetMapping("/forecheckLogin")

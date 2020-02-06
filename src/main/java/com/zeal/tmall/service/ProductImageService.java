@@ -5,6 +5,7 @@
  */
 package com.zeal.tmall.service;
 
+import com.zeal.tmall.pojo.OrderItem;
 import com.zeal.tmall.pojo.Product;
 import com.zeal.tmall.pojo.ProductImage;
 
@@ -27,4 +28,6 @@ public interface ProductImageService {
     void setFirstProductImage(Product product);
 
     void setFirstProductImages(List<Product> products);
+
+    void setFirstProductImagesOnOrderItems(List<OrderItem> ois);
 }
