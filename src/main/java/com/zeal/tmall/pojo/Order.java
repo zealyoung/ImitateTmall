@@ -9,8 +9,10 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.zeal.tmall.pojo.enums.OrderStatus;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Data;
 import lombok.Setter;
+import lombok.experimental.Tolerate;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -67,5 +69,5 @@ public class Order {
         statusDesc = OrderStatus.getInfo(status);
         return statusDesc;
     }
-
+    
 }

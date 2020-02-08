@@ -48,7 +48,9 @@
                     var url = "foredeleteOrderItem?oiid="+deleteOrderItemid;
                     axios.get(url).then(function(response){
                         if(0==response.data.code){
-                            $("tr.cartProductItemTR[oiid="+deleteOrderItemid+"]").hide();
+                            //$("tr.cartProductItemTR[oiid="+deleteOrderItemid+"]").hide();
+                            $("tr.cartProductItemTR[oiid="+deleteOrderItemid+"]").remove();
+                            calcCartSumPriceAndNumber();
                         }
                         else{
                             location.href="login";

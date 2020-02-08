@@ -9,15 +9,20 @@ import com.zeal.tmall.dao.OrderDAO;
 import com.zeal.tmall.dao.OrderItemDAO;
 import com.zeal.tmall.pojo.Order;
 import com.zeal.tmall.pojo.OrderItem;
+import com.zeal.tmall.pojo.User;
+import com.zeal.tmall.pojo.enums.OrderStatus;
+import com.zeal.tmall.service.OrderItemService;
 import com.zeal.tmall.service.OrderService;
 import com.zeal.tmall.service.ProductImageService;
 import com.zeal.tmall.util.Page4Navigator;
+import org.aspectj.weaver.ast.Or;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -28,6 +33,8 @@ public class OrderServiceImps implements OrderService {
     @Autowired
     OrderItemDAO orderItemDAO;
     @Autowired
+    OrderItemService orderItemService;
+    @Autowired
     ProductImageService productImageService;
 
     @Override
@@ -36,6 +43,26 @@ public class OrderServiceImps implements OrderService {
         Pageable pageable = PageRequest.of(start, size, sort);
         Page pageFromJPA =orderDAO.findAll(pageable);
         return new Page4Navigator<>(pageFromJPA, navigatePages);
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public float create(Order order, List<OrderItem> orderItems) {
+        create(order);
+        float totalPrice = 0;
+
+        for(OrderItem orderItem : orderItems){
+            orderItem.setOrder(order);
+            orderItemService.update(orderItem);
+            totalPrice += orderItem.getProduct().getPromotePrice() * orderItem.getNumber();
+        }
+
+        return totalPrice;
+    }
+
+    @Override
+    public void create(Order order) {
+        orderDAO.save(order);
     }
 
     @Override
@@ -67,5 +94,22 @@ public class OrderServiceImps implements OrderService {
         order.setTotal(total);
         order.setOrderItems(orderItems);
         order.setTotalNumber(totalNumber);
+    }
+
+    @Override
+    public List<Order> listByUserWithoutDelete(User user) {
+        List<Order> orders = orderDAO.findByUserAndStatusNotOrderByIdDesc(user, OrderStatus.DELETE.getStatus());
+        fill(orders);
+        return orders;
+    }
+
+    @Override
+    public void cacl(Order order) {
+        List<OrderItem> orderItems = order.getOrderItems();
+        float totalPrice = 0;
+        for (OrderItem orderItem : orderItems) {
+            totalPrice += orderItem.getProduct().getPromotePrice() * orderItem.getNumber();
+        }
+        order.setTotal(totalPrice);
     }
 }

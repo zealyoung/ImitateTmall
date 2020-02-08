@@ -6,7 +6,9 @@
 package com.zeal.tmall.pojo;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import lombok.Builder;
 import lombok.Data;
+import lombok.experimental.Tolerate;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -14,6 +16,7 @@ import java.time.LocalDateTime;
 @Entity
 @JsonIgnoreProperties({ "handler","hibernateLazyInitializer" })
 @Data
+@Builder
 public class Review {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,4 +33,9 @@ public class Review {
     private String content;
 
     private LocalDateTime createDate;
+
+    @Tolerate
+    public Review(){
+
+    }
 }
