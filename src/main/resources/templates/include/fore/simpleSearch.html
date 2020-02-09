@@ -1,10 +1,10 @@
 <div class th:fragment="html">
-    <a th:href="${application.contextPath}">
+    <a th:href="home">
         <img id="simpleLogo" class="simpleLogo" src="img/site/simpleLogo.png">
     </a>
     <form action="search" method="get" >
         <div class="simpleSearchDiv pull-right">
-            <input type="text" placeholder="平衡车 原汁机"  name="keyword">
+            <input type="text" placeholder="输入您想要查询的商品名称或关键字"  name="keyword">
             <button class="searchButton" type="submit">搜天猫</button>
             <div class="searchBelow">
                 <span th:each="c,status: ${application.categories_below_search}" th:if="${status.index>=7 && status.index<=10}">

@@ -1,5 +1,5 @@
 <nav class="top" th:fragment="html">
-    <a th:href="${application.contextPath}">
+    <a th:href="home">
         <span style="color:#C40000;margin:0px" class=" glyphicon glyphicon-home redColor"></span>
         天猫首页
     </a>
@@ -22,7 +22,7 @@
 			<a href="bought">我的订单</a>
 			<a href="cart">
 			<span style="color:#C40000;margin:0px" class=" glyphicon glyphicon-shopping-cart redColor"></span>
-			购物车<strong th:text="${session.cartTotalItemNumber}"></strong>件</a>
+			购物车</a>
 	</span>
 </nav>
 

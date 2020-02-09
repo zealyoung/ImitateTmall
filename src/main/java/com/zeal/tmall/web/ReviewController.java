@@ -5,6 +5,7 @@
  */
 package com.zeal.tmall.web;
 
+import com.zeal.tmall.annotation.LoginRequired;
 import com.zeal.tmall.pojo.Order;
 import com.zeal.tmall.pojo.Product;
 import com.zeal.tmall.pojo.Review;
@@ -37,6 +38,7 @@ public class ReviewController {
     ProductService productService;
 
     @GetMapping("forereview")
+    @LoginRequired
     public Object review(int oid) {
         Order order = orderService.get(oid);
         orderService.fill(order);
@@ -53,6 +55,7 @@ public class ReviewController {
     }
 
     @PostMapping("foredoreview")
+    @LoginRequired
     @Transactional(rollbackFor = Exception.class)
     public Object doreview(HttpSession session, int oid, int pid, String content) {
         User user = (User) session.getAttribute("user");

@@ -5,6 +5,7 @@
  */
 package com.zeal.tmall.web;
 
+import com.zeal.tmall.annotation.LoginRequired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -24,18 +25,22 @@ public class ForePageController {
         return "fore/register";
     }
     @GetMapping(value="/alipay")
+    @LoginRequired
     public String alipay(){
         return "fore/alipay";
     }
     @GetMapping(value="/bought")
+    @LoginRequired
     public String bought(){
         return "fore/bought";
     }
     @GetMapping(value="/buy")
+    @LoginRequired
     public String buy(){
         return "fore/buy";
     }
     @GetMapping(value="/cart")
+    @LoginRequired
     public String cart(){
         return "fore/cart";
     }
@@ -44,6 +49,7 @@ public class ForePageController {
         return "fore/category";
     }
     @GetMapping(value="/confirmPay")
+    @LoginRequired
     public String confirmPay(){
         return "fore/confirmPay";
     }
@@ -52,10 +58,12 @@ public class ForePageController {
         return "fore/login";
     }
     @GetMapping(value="/orderConfirmed")
+    @LoginRequired
     public String orderConfirmed(){
         return "fore/orderConfirmed";
     }
     @GetMapping(value="/payed")
+    @LoginRequired
     public String payed(){
         return "fore/payed";
     }

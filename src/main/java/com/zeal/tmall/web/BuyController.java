@@ -5,6 +5,7 @@
  */
 package com.zeal.tmall.web;
 
+import com.zeal.tmall.annotation.LoginRequired;
 import com.zeal.tmall.pojo.Order;
 import com.zeal.tmall.pojo.OrderItem;
 import com.zeal.tmall.pojo.Product;
@@ -37,6 +38,7 @@ public class BuyController {
     ProductImageService productImageService;
 
     @GetMapping(value = "/forebuyone")
+    @LoginRequired
     public Object buyOneOrAddCart(int pid, int num, HttpSession session) {
         Product product = productService.get(pid);
         User user = (User) session.getAttribute("user");
@@ -61,12 +63,14 @@ public class BuyController {
     }
 
     @GetMapping("foreaddCart")
+    @LoginRequired
     public Object addCart(int pid, int num, HttpSession session) {
         buyOneOrAddCart(pid,num,session);
         return Result.success();
     }
 
     @GetMapping(value = "/forebuy")
+    @LoginRequired
     public Object buy(@RequestParam(value = "oiid") String[] orderItemsId, HttpSession session) {
         List<OrderItem> orderItems = new ArrayList<>();
         User user = (User) session.getAttribute("user");
@@ -103,6 +107,7 @@ public class BuyController {
     }
 
     @GetMapping("forecart")
+    @LoginRequired
     public Object cart(HttpSession session) {
         User user = (User) session.getAttribute("user");
         List<OrderItem> orderItems = orderItemService.listByUser(user);
@@ -111,6 +116,7 @@ public class BuyController {
     }
 
     @GetMapping("/forechangeOrderItem")
+    @LoginRequired
     public Object changeOrderItem(int pid, int num, HttpSession session) {
         User user = (User) session.getAttribute("user");
         if(user == null){
@@ -133,6 +139,7 @@ public class BuyController {
     }
 
     @GetMapping("/foredeleteOrderItem")
+    @LoginRequired
     public Object deleteOrderItem(@RequestParam(value = "oiid") int orderItemId, HttpSession session) {
         User user = (User) session.getAttribute("user");
         if(user == null){
@@ -156,6 +163,7 @@ public class BuyController {
     }
 
     @PostMapping("/forecreateOrder")
+    @LoginRequired
     public Object createOrder(Order order, HttpSession session) {
         User user = (User) session.getAttribute("user");
         if(user == null)
@@ -178,6 +186,7 @@ public class BuyController {
     }
 
     @GetMapping("/forepayed")
+    @LoginRequired
     public Object payed(@RequestParam(value = "oid") int orderId){
         Order order = orderService.get(orderId);
         order.setStatus(OrderStatus.WAITDELIVERY.getStatus());
@@ -187,6 +196,7 @@ public class BuyController {
     }
 
     @GetMapping("forebought")
+    @LoginRequired
     public Object bought(HttpSession session) {
         User user = (User) session.getAttribute("user");
         if(user == null)
@@ -196,6 +206,7 @@ public class BuyController {
     }
 
     @GetMapping("/foreconfirmPay")
+    @LoginRequired
     public Object confirmPay(int oid) {
         Order order = orderService.get(oid);
         orderService.fill(order);
@@ -204,6 +215,7 @@ public class BuyController {
     }
 
     @GetMapping("foreorderConfirmed")
+    @LoginRequired
     public Object orderConfirmed( int oid) {
         Order order = orderService.get(oid);
         order.setStatus(OrderStatus.WAITREVIEW.getStatus());
@@ -213,6 +225,7 @@ public class BuyController {
     }
 
     @PutMapping("foredeleteOrder")
+    @LoginRequired
     public Object deleteOrder(int oid){
         Order order= orderService.get(oid);
         order.setStatus(OrderStatus.DELETE.getStatus());
