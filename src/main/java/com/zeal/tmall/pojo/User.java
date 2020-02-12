@@ -11,6 +11,8 @@ import lombok.Data;
 import lombok.Setter;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @JsonIgnoreProperties({ "handler","hibernateLazyInitializer" })
@@ -21,11 +23,16 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    private String password;
-
+    @NotNull(message = "用户名不能为空")
+    @NotEmpty(message = "用户名不能为空")
     private String name;
 
-    private String salt;
+    @NotNull(message = "密码不能为空")
+    @NotEmpty(message = "密码不能为空")
+    private String password;
+
+
+    private String role = "NORMAL";
 
     @Transient
     @Setter(AccessLevel.NONE)

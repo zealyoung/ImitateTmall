@@ -5,7 +5,10 @@
  */
 package com.zeal.tmall.web;
 
+import com.zeal.tmall.annotation.HasAuthority;
+import com.zeal.tmall.annotation.LoginRequired;
 import com.zeal.tmall.pojo.Category;
+import com.zeal.tmall.pojo.enums.RoleAuthority;
 import com.zeal.tmall.service.CategoryService;
 import com.zeal.tmall.util.ImageUtil;
 import com.zeal.tmall.util.Page4Navigator;
@@ -22,6 +25,8 @@ public class CategoryController {
     CategoryService categoryService;
 
     @GetMapping("/categories")
+    @LoginRequired
+    @HasAuthority(RoleAuthority.ADMIN)
     public Page4Navigator<Category> list(@RequestParam(value = "start", defaultValue = "0") int start,
                                          @RequestParam(value = "size", defaultValue = "5") int size) throws Exception {
         start = start < 0 ? 0 : start;
@@ -30,6 +35,8 @@ public class CategoryController {
     }
 
     @PostMapping("/categories")
+    @LoginRequired
+    @HasAuthority(RoleAuthority.SUPER_ADMIN)
     public Object create(Category bean, MultipartFile image, HttpServletRequest request) throws Exception {
         categoryService.create(bean);
         saveOrUpdateImageFile(bean, image, request);
@@ -37,6 +44,8 @@ public class CategoryController {
     }
 
     @PutMapping("categories/{id}")
+    @LoginRequired
+    @HasAuthority(RoleAuthority.SUPER_ADMIN)
     public Object update(Category bean, MultipartFile image, HttpServletRequest request) throws Exception {
 
         categoryService.update(bean);
@@ -56,6 +65,8 @@ public class CategoryController {
     }
 
     @DeleteMapping("/categories/{id}")
+    @LoginRequired
+    @HasAuthority(RoleAuthority.SUPER_ADMIN)
     public String delete(@PathVariable("id") int id, HttpServletRequest request)  throws Exception {
         categoryService.delete(id);
         File imageFolder = new File(request.getServletContext().getRealPath("img/category"));
@@ -65,6 +76,8 @@ public class CategoryController {
     }
 
     @GetMapping("/categories/{id}")
+    @LoginRequired
+    @HasAuthority(RoleAuthority.ADMIN)
     public Category get(@PathVariable("id") int id) throws Exception {
         Category bean=categoryService.get(id);
         return bean;

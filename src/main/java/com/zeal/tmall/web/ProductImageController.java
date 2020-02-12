@@ -5,8 +5,11 @@
  */
 package com.zeal.tmall.web;
 
+import com.zeal.tmall.annotation.HasAuthority;
+import com.zeal.tmall.annotation.LoginRequired;
 import com.zeal.tmall.pojo.Product;
 import com.zeal.tmall.pojo.ProductImage;
+import com.zeal.tmall.pojo.enums.RoleAuthority;
 import com.zeal.tmall.service.CategoryService;
 import com.zeal.tmall.service.ProductImageService;
 import com.zeal.tmall.service.ProductService;
@@ -31,6 +34,8 @@ public class ProductImageController {
     CategoryService categoryService;
 
     @GetMapping("/products/{pid}/productImages")
+    @LoginRequired
+    @HasAuthority(RoleAuthority.ADMIN)
     public List<ProductImage> list(@RequestParam("type") String type, @PathVariable("pid") int pid) throws Exception {
         Product product = productService.get(pid);
 
@@ -48,6 +53,8 @@ public class ProductImageController {
     }
 
     @PostMapping("/productImages")
+    @LoginRequired
+    @HasAuthority(RoleAuthority.SUPER_ADMIN)
     public Object create(@RequestParam("pid") int pid,
                          @RequestParam("type") String type,
                          MultipartFile image,
@@ -80,6 +87,8 @@ public class ProductImageController {
     }
 
     @DeleteMapping("/productImages/{id}")
+    @LoginRequired
+    @HasAuthority(RoleAuthority.SUPER_ADMIN)
     public String delete(@PathVariable("id") int id, HttpServletRequest request)  throws Exception {
 
         ProductImage bean = productImageService.get(id);

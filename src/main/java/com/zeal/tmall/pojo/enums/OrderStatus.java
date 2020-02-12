@@ -42,7 +42,7 @@ public enum OrderStatus {
     public static String getInfo(String status) {
         if(status != null) {
             for(OrderStatus entity : OrderStatus.values()){
-                if(entity.getStatus() == status){
+                if(entity.getStatus().equals(status)){
                     return entity.getStatusDesc();
                 }
             }

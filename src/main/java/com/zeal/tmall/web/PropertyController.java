@@ -5,7 +5,10 @@
  */
 package com.zeal.tmall.web;
 
+import com.zeal.tmall.annotation.HasAuthority;
+import com.zeal.tmall.annotation.LoginRequired;
 import com.zeal.tmall.pojo.Property;
+import com.zeal.tmall.pojo.enums.RoleAuthority;
 import com.zeal.tmall.service.PropertyService;
 import com.zeal.tmall.util.Page4Navigator;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +22,8 @@ public class PropertyController {
     PropertyService propertyService;
 
     @GetMapping(value = "/categories/{cid}/properties")
+    @LoginRequired
+    @HasAuthority(RoleAuthority.ADMIN)
     public Page4Navigator<Property> list(@PathVariable("cid") int cid,
                                          @RequestParam(value = "start", defaultValue = "0") int start,
                                          @RequestParam(value = "size", defaultValue = "5" ) int size) throws Exception{
@@ -28,24 +33,32 @@ public class PropertyController {
     }
 
     @PostMapping(value = "/properties")
-    public Object add(@RequestBody @Valid Property bean) {
+    @LoginRequired
+    @HasAuthority(RoleAuthority.SUPER_ADMIN)
+    public Object create(@RequestBody @Valid Property bean) {
         propertyService.create(bean);
         return bean;
     }
 
     @DeleteMapping("/properties/{id}")
+    @LoginRequired
+    @HasAuthority(RoleAuthority.SUPER_ADMIN)
     public String delete(@PathVariable("id") int id)  throws Exception {
         propertyService.delete(id);
         return null;
     }
 
     @PutMapping("/properties")
+    @LoginRequired
+    @HasAuthority(RoleAuthority.SUPER_ADMIN)
     public Object update(@RequestBody @Valid Property bean) throws Exception {
         propertyService.update(bean);
         return bean;
     }
 
     @GetMapping("/properties/{id}")
+    @LoginRequired
+    @HasAuthority(RoleAuthority.ADMIN)
     public Property get(@PathVariable("id") int id) throws Exception {
         Property bean = propertyService.get(id);
         return bean;

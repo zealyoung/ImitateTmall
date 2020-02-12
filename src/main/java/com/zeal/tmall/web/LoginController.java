@@ -18,6 +18,7 @@ import org.springframework.web.util.HtmlUtils;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 import java.io.IOException;
 
 @RestController
@@ -26,7 +27,7 @@ public class LoginController {
     UserService userService;
 
     @PostMapping(value = "/foreregister")
-    public Object register(@RequestBody User user) {
+    public Object register(@RequestBody @Valid User user) {
         String name = user.getName();
         name = HtmlUtils.htmlEscape(name);
         user.setName(name);
@@ -34,8 +35,8 @@ public class LoginController {
             String message = "用户名已被使用，请重新输入";
             return Result.fail(message);
         } else {
-            userService.create(user);
-            return Result.success();
+            boolean registerSuccess = userService.create(user);
+            return registerSuccess ? Result.success() : Result.fail("注册信息有误");
         }
     }
 
@@ -44,10 +45,9 @@ public class LoginController {
         String name = userGet.getName();
         name = HtmlUtils.htmlEscape(name);
 
-        User user =userService.get(name, userGet.getPassword());
+        User user = userService.get(name, userGet.getPassword());
         if(user == null){
-            String message ="账号密码错误";
-            return Result.fail(message);
+            return Result.fail("账号密码有误");
         } else{
             session.setAttribute("user", user);
             return Result.success();
@@ -58,7 +58,6 @@ public class LoginController {
     public void logout(HttpServletResponse response, HttpSession session) throws IOException {
         response.sendRedirect("home");
         session.removeAttribute("user");
-        //return "redirect:home";
     }
 
     @GetMapping("/forecheckLogin")

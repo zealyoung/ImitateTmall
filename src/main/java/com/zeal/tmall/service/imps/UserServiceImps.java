@@ -5,16 +5,20 @@
  */
 package com.zeal.tmall.service.imps;
 
+import cn.hutool.crypto.SecureUtil;
 import com.zeal.tmall.dao.UserDAO;
 import com.zeal.tmall.pojo.User;
 import com.zeal.tmall.service.UserService;
 import com.zeal.tmall.util.Page4Navigator;
+import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+
+import javax.validation.Valid;
 
 @Service
 public class UserServiceImps implements UserService {
@@ -36,12 +40,17 @@ public class UserServiceImps implements UserService {
     }
 
     @Override
-    public void create(User user) {
+    public boolean create(User user) {
+        user.setRole("NORMAL");//防止跳过前端通过url构造管理员角色进行提交的情况，对于管理员权限，只能从数据库直接修改。
+        String password = SecureUtil.md5(user.getPassword());
+        user.setPassword(password);
         userDAO.save(user);
+        return true;
     }
 
     @Override
     public User get(String name, String password) {
+        password = SecureUtil.md5(password);
         return userDAO.getByNameAndPassword(name,password);
     }
 }

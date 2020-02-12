@@ -14,7 +14,7 @@ public interface UserService {
 
     boolean isExist(String name);
 
-    void create(User user);
+    boolean create(User user);
 
     User get(String name, String password);
 }

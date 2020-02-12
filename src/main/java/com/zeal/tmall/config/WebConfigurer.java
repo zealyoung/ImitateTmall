@@ -5,6 +5,7 @@
  */
 package com.zeal.tmall.config;
 
+import com.zeal.tmall.interceptor.AdminAuthorityInterceptor;
 import com.zeal.tmall.interceptor.LoginInterceptor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -13,10 +14,18 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
 public class WebConfigurer implements WebMvcConfigurer {
+
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(LoginInterceptor()).addPathPatterns("/**")
                                                    .excludePathPatterns("/js/**","/img/**","/css/**","/webapp/**");
+        registry.addInterceptor(AdminAuthorityInterceptor()).addPathPatterns("/**")
+                                                            .excludePathPatterns("/js/**","/img/**","/css/**","/webapp/**");
+    }
+
+    @Bean
+    public AdminAuthorityInterceptor AdminAuthorityInterceptor(){
+        return new AdminAuthorityInterceptor();
     }
 
     @Bean

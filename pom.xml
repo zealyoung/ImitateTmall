@@ -118,6 +118,12 @@
 			<version>1.18.4</version>
 			<scope>provided</scope>
 		</dependency>
+		<!--hu tool -->
+		<dependency>
+			<groupId>cn.hutool</groupId>
+			<artifactId>hutool-all</artifactId>
+			<version>5.1.0</version>
+		</dependency>
 		<!-- springboot test -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>

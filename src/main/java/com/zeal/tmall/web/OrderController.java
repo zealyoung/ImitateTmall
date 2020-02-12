@@ -5,8 +5,11 @@
  */
 package com.zeal.tmall.web;
 
+import com.zeal.tmall.annotation.HasAuthority;
+import com.zeal.tmall.annotation.LoginRequired;
 import com.zeal.tmall.pojo.Order;
 import com.zeal.tmall.pojo.enums.OrderStatus;
+import com.zeal.tmall.pojo.enums.RoleAuthority;
 import com.zeal.tmall.service.OrderService;
 import com.zeal.tmall.util.Page4Navigator;
 import com.zeal.tmall.util.Result;
@@ -22,6 +25,8 @@ public class OrderController {
     OrderService orderService;
 
     @GetMapping("/orders")
+    @LoginRequired
+    @HasAuthority(RoleAuthority.ADMIN)
     public Page4Navigator<Order> list(@RequestParam(value = "start", defaultValue = "0") int start,
                                       @RequestParam(value = "size", defaultValue = "5") int size) throws Exception {
         start = start < 0 ? 0 : start;
@@ -31,6 +36,8 @@ public class OrderController {
     }
 
     @PutMapping("deliveryOrder/{oid}")
+    @LoginRequired
+    @HasAuthority(RoleAuthority.SUPER_ADMIN)
     public Object deliveryOrder(@PathVariable int oid) throws IOException {
         Order order = orderService.get(oid);
         order.setDeliveryDate(LocalDateTime.now());

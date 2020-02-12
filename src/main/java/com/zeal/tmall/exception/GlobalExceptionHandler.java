@@ -7,6 +7,7 @@ package com.zeal.tmall.exception;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.zeal.tmall.util.Result;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -14,14 +15,14 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @ControllerAdvice
-public class GloabalExceptionHandler {
+public class GlobalExceptionHandler {
     @ExceptionHandler(value = Exception.class)
-    public String defaultErrorHandler(HttpServletRequest req, Exception e) throws Exception {
+    public Object defaultErrorHandler(HttpServletRequest req, Exception e) throws Exception {
 
         String failMsg = null;
         if(e instanceof MethodArgumentNotValidException) {
             failMsg = ((MethodArgumentNotValidException) e).getBindingResult().getFieldError().getDefaultMessage();
-            return failMsg;
+            return Result.fail(failMsg);
         }
 
         e.printStackTrace();

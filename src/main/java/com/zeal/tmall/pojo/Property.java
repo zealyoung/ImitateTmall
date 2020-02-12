@@ -27,7 +27,6 @@ public class Property {
 
     @ManyToOne
     @JoinColumn(name = "cid")
-    @JsonBackReference
     private Category category;
 
 }

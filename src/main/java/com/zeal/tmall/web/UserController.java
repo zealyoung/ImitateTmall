@@ -5,7 +5,10 @@
  */
 package com.zeal.tmall.web;
 
+import com.zeal.tmall.annotation.HasAuthority;
+import com.zeal.tmall.annotation.LoginRequired;
 import com.zeal.tmall.pojo.User;
+import com.zeal.tmall.pojo.enums.RoleAuthority;
 import com.zeal.tmall.service.UserService;
 import com.zeal.tmall.util.Page4Navigator;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +22,8 @@ public class UserController {
     UserService userService;
 
     @GetMapping("/users")
+    @LoginRequired
+    @HasAuthority(RoleAuthority.ADMIN)
     public Page4Navigator<User> list(@RequestParam(value = "start", defaultValue = "0") int start,
                                      @RequestParam(value = "size", defaultValue = "5") int size) throws Exception {
         start = start < 0 ? 0 : start;
