@@ -84,4 +84,12 @@ public class ProductServiceImps implements ProductService {
     public void setReviewCount(Product product) {
         product.setReviewCount(reviewService.getCount(product));
     }
+
+    @Override
+    public List<Product> searchByName(String keyword, int start, int size) {
+        Sort sort = Sort.by(Sort.Direction.DESC, "id");
+        Pageable pageable = PageRequest.of(start, size, sort);
+        List<Product> products =productDAO.findByNameLike("%"+ keyword +"%",pageable);
+        return products;
+    }
 }

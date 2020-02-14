@@ -28,4 +28,6 @@ public interface ProductService  {
     void setReviewCount(List<Product> products);
 
     void setReviewCount(Product product);
+
+    List<Product> searchByName(String name, int start, int size);
 }

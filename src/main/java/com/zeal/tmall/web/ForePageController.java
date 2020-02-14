@@ -81,6 +81,6 @@ public class ForePageController {
     }
     @GetMapping(value="/search")
     public String searchResult(){
-        return "fore/search";
+        return "fore/searchFor";
     }
 }
