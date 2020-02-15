@@ -10,7 +10,6 @@ import com.zeal.tmall.dao.UserDAO;
 import com.zeal.tmall.pojo.User;
 import com.zeal.tmall.service.UserService;
 import com.zeal.tmall.util.Page4Navigator;
-import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;

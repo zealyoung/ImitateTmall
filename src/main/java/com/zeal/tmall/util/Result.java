@@ -5,9 +5,12 @@
  */
 package com.zeal.tmall.util;
 
+import lombok.Builder;
 import lombok.Data;
+import lombok.experimental.Tolerate;
 
 @Data
+@Builder
 public class Result {
 
     public static int SUCCESS_CODE = 0;
@@ -33,5 +36,10 @@ public class Result {
 
     public static Result fail(String message) {
         return new Result(FAIL_CODE,message,null);
+    }
+
+    @Tolerate
+    public Result(){
+
     }
 }
