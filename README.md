@@ -7,6 +7,7 @@
 mall
 ├── annotation  -- 注解
 ├── config      -- 配置类
+├── component   -- 组件类
 ├── dao         -- ORM映射
 ├── exception   -- 异常处理
 ├── interceptor -- 拦截器
@@ -24,4 +25,6 @@ mall
 |       JPA        |     ORM框架      |
 |      Redis       |       缓存       |
 |      Lombok      | 简化对象封装工具 |
+|   slf4j+log4j2   |     日志操作     |
+|      hutool      |     工具类库     |
 
