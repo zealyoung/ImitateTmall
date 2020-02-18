@@ -1,4 +1,4 @@
-package com.zeal.tmall;
+package com.zeal.mall;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
